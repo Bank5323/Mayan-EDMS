@@ -26,6 +26,13 @@ help:
 	@echo "Usage: make <target>\n"
 	@awk 'BEGIN {FS = ":.*##"} /^[0-9a-zA-Z_-]+:.*?## / { printf "  * %-40s -%s\n", $$1, $$2 }' $(MAKEFILE_LIST)|sort
 
+
+# 
+
+# Run server
+runserver-docker: ## Run the development server with docker for test.
+	./manage.py runserver 0.0.0.0:8000
+
 # Cleaning
 
 clean: ## Remove Python and build artifacts.
