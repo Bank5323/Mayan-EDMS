@@ -12,12 +12,22 @@ from mayan.apps.events.decorators import method_event
 
 from .events import event_theme_created, event_theme_edited
 
+#import RGBColorFie to create GUI select color
+from colorful.fields import RGBColorField
+
 
 class Theme(ExtraDataModelMixin, models.Model):
     label = models.CharField(
         db_index=True, help_text=_('A short text describing the theme.'),
         max_length=128, unique=True, verbose_name=_('Label')
     )
+
+#add color code to model
+    color = RGBColorField(
+        help_text=_('The RGB color values for the tag.'),
+        verbose_name=_('Color')
+    )
+
     stylesheet = models.TextField(
         blank=True, help_text=_(
             'The CSS stylesheet to change the appearance of the different '
@@ -39,6 +49,7 @@ class Theme(ExtraDataModelMixin, models.Model):
                 'theme_id': self.pk
             }
         )
+    
 
     @method_event(
         event_manager_class=EventManagerSave,
