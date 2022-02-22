@@ -44,6 +44,7 @@ else:
 # Application definition
 
 INSTALLED_APPS = (
+    'mayan.apps.logo',
     # Placed at the top so it can preload all events defined by apps.
     'mayan.apps.events',
     # Placed at the top so it can override any template.
