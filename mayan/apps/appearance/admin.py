@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Theme, UserThemeSetting
+from .models import Theme, UserThemeSetting ,CurrentTheme #add CurrentTheme model
 
 
 @admin.register(Theme)
@@ -17,3 +17,8 @@ class UserThemeSettingAdmin(admin.ModelAdmin):
         'user__username', 'user__first_name', 'user__last_name',
         'user__email', 'theme__label',
     )
+
+#CurrentTheme
+@admin.register(CurrentTheme)
+class CurrentThemeAdmin(admin.ModelAdmin):
+    list_display = ('theme',) 

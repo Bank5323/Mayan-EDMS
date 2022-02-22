@@ -23,9 +23,14 @@ class Theme(ExtraDataModelMixin, models.Model):
     )
 
 #add color code to model
-    color = RGBColorField(
-        help_text=_('The RGB color values for the tag.'),
-        verbose_name=_('Color')
+    color_background = RGBColorField(
+        help_text=_('The RGB color values for the topbar menu.'),
+        verbose_name=_('Color Background Topbar Menu')
+    )
+
+    color_menu = RGBColorField(
+        help_text=_('The RGB color values for the main menu.'),
+        verbose_name=_('Color Background Main Menu')
     )
 
     stylesheet = models.TextField(
@@ -85,3 +90,21 @@ class UserThemeSetting(models.Model):
 
     def __str__(self):
         return force_text(s=self.user)
+
+# add CurrentTheme to ref all theme
+class CurrentTheme(models.Model):
+    theme = models.ForeignKey(
+        blank=True, null=True, on_delete=models.CASCADE,
+        related_name='CurrentTheme', to=Theme, verbose_name=_('CurrentTheme')
+    )
+
+    class Meta:
+        verbose_name = _('CurrentTheme')
+        verbose_name_plural = _('CurrentTheme')
+
+    def __str__(self):
+        return force_text(s=self.theme)
+
+    def save(self, *args, **kwargs):
+        self.__class__.objects.exclude(id=self.id).delete()
+        super().save(*args, **kwargs)

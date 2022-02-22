@@ -2,19 +2,19 @@ from django import forms
 
 from mayan.apps.views.forms import DetailForm
 
-from .models import Theme, UserThemeSetting
+from .models import Theme, UserThemeSetting ,CurrentTheme #add CurrentTheme model
 
 
 class ThemeForm(forms.ModelForm):
     class Meta:
-        fields = ('label', 'color') #edit form
+        fields = ('label', 'color_background', 'color_menu') #edit form
         model = Theme
 
 
 class UserThemeSettingForm(forms.ModelForm):
     class Meta:
         fields = ('theme',)
-        model = UserThemeSetting
+        model = CurrentTheme ##to change all theme | original model is UserThemeSetting
         widgets = {
             'theme': forms.Select(
                 attrs={

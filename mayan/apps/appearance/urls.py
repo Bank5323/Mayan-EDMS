@@ -4,7 +4,7 @@ from mayan.apps.views.generics import SimpleView
 
 from .views import (
     CurrentUserThemeSettingsDetailsView, CurrentUserThemeSettingsEditView,
-    ThemeCreateView, ThemeDeleteView, ThemeEditView, ThemeListView
+    ThemeCreateView, ThemeDeleteView, ThemeEditView, ThemeListView ,CurrentUserThemeView #add CurrentUserThemeView
 )
 
 
@@ -52,7 +52,7 @@ urlpatterns_user_theme_settings = [
     ),
     url(
         regex=r'^user/theme/edit/$', name='current_user_theme_settings_edit',
-        view=CurrentUserThemeSettingsEditView.as_view()
+        view=CurrentUserThemeView.as_view() ## change from CurrentUserThemeSettingsEditView to CurrentUserThemeView
     )
 ]
 

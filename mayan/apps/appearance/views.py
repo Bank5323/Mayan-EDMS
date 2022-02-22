@@ -7,7 +7,7 @@ from mayan.apps.views.generics import (
     SingleObjectListView, SimpleView
 )
 
-from .forms import ThemeForm, UserThemeSettingForm, UserThemeSettingForm_view
+from .forms import ThemeForm, UserThemeSettingForm, UserThemeSettingForm_view 
 from .icons import icon_theme_setup
 from .links import link_theme_create
 from .models import Theme
@@ -15,6 +15,20 @@ from .permissions import (
     permission_theme_create, permission_theme_delete, permission_theme_edit,
     permission_theme_view
 )
+
+#add CurrentUserThemeView to change all theme
+class CurrentUserThemeView(SingleObjectCreateView):
+    extra_context = {
+        'title': _('Edit current user theme settings details')
+    }
+    form_class = UserThemeSettingForm
+    post_action_redirect = reverse_lazy(
+        viewname='common:home'
+    )
+    view_permission = permission_theme_create
+
+    def get_instance_extra_data(self):
+        return {'_event_actor': self.request.user}
 
 
 class CurrentUserThemeSettingsDetailsView(SimpleView):
