@@ -23,13 +23,18 @@ class Theme(ExtraDataModelMixin, models.Model):
     )
 
 #add color code to model
-    color_background = RGBColorField(
-        help_text=_('The RGB color values for the topbar menu.'),
+    mainColor = RGBColorField(
+        help_text=_('The RGB color values for main color.'),
         verbose_name=_('Color Background Topbar Menu')
     )
 
-    color_menu = RGBColorField(
-        help_text=_('The RGB color values for the main menu.'),
+    secondColor = RGBColorField(
+        help_text=_('The RGB color values for second color.'),
+        verbose_name=_('Color Background Main Menu')
+    )
+
+    thirdColor = RGBColorField(
+        help_text=_('The RGB color values for third color.'),
         verbose_name=_('Color Background Main Menu')
     )
 
@@ -54,7 +59,6 @@ class Theme(ExtraDataModelMixin, models.Model):
                 'theme_id': self.pk
             }
         )
-    
 
     @method_event(
         event_manager_class=EventManagerSave,
@@ -68,8 +72,60 @@ class Theme(ExtraDataModelMixin, models.Model):
         }
     )
     def save(self, *args, **kwargs):
+        maincolor = self.mainColor
+        secondColor = self.secondColor
+        thirdColor = self.thirdColor
+        css = f"""
+        .btn{{
+        background-color: {maincolor};
+        }}
+        .panel-heading{{
+            background-color: {maincolor};
+        }}
+        #menu-main{{
+            background-color: {secondColor};
+        }}
+        .panel-heading{{
+            background-color: {maincolor};
+        }}
+        a:hover{{
+            color: {thirdColor};
+        }} 
+        .row strong{{
+            color: white;
+        }}
+        .panel .panel-footer{{
+            color: {secondColor};
+        }}
+        .panel panel-heading{{
+            background: {secondColor};
+        }}
+        .panel-title{{
+            background-color: {secondColor};
+        }}
+        #accordion-sidebar .panel-body{{
+            background-color: {maincolor};
+        }}
+        #accordion-sidebar .panel-body:hover{{
+            background-color: {maincolor};
+        }}
+        #accordion-sidebar a[aria-expanded="true"]{{
+            background-color: {thirdColor};
+        }}
+        .navbar-default .navbar-nav&gt;li&gt;a:hover, .navbar-default .navbar-nav&gt;li&gt;a:focus {{
+            color: {thirdColor};
+            background-color: transparent;
+        }}
+        .panel-primary&gt;.panel-heading {{
+            background-color: {secondColor};
+            border-color: {thirdColor};
+        }}
+        .container-fluid{{
+                background: {maincolor}
+        }}
+        """
         self.stylesheet = bleach.clean(
-            text=self.stylesheet, tags=('style',)
+            text=css, tags=('style',)
         )
         super().save(*args, **kwargs)
 

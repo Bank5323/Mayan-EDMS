@@ -20,7 +20,7 @@ from .links import (
     link_theme_delete, link_theme_edit, link_theme_list, link_theme_setup
 )
 
-from .handlers import handler_user_theme_setting_create, handler_theme_create #add import handler_theme_create to hander stylesheet
+from .handlers import handler_user_theme_setting_create
 from .permissions import (
     permission_theme_delete, permission_theme_edit, permission_theme_view
 )
@@ -63,7 +63,7 @@ class AppearanceApp(MayanAppConfig):
         ModelCopy(
             model=Theme, bind_link=True, register_permission=True
         ).add_fields(
-            field_names=('label','color_background' ,'color_menu' , 'stylesheet',),
+            field_names=('label', 'stylesheet',),
         )
 
         EventModelRegistry.register(model=Theme)
@@ -93,18 +93,10 @@ class AppearanceApp(MayanAppConfig):
             sender=settings.AUTH_USER_MODEL
         )
 
-        #post save for edit stylesheet
-        post_save.connect(
-            receiver=handler_theme_create,
-            sender=Theme
-        )
-
 
         menu_object.bind_links(
             links=(
-                link_theme_delete, 
-                ## option not function
-                # link_theme_edit
+                link_theme_delete, link_theme_edit
             ), sources=(Theme,)
         )
 

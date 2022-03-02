@@ -31,7 +31,7 @@ help:
 
 # Run server
 runserver-docker: ## Run the development server with docker for test.
-	./manage.py runserver 0.0.0.0:8000
+	./manage.py runserver --settings=mayan.settings.development 0.0.0.0:8000
 
 # Cleaning
 
