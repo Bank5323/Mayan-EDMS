@@ -19,6 +19,7 @@ from colorful.fields import RGBColorField
 from os import listdir
 from os.path import isfile, join
 
+from django.utils.safestring import mark_safe
 
 
 class Theme(ExtraDataModelMixin, models.Model):
@@ -28,7 +29,7 @@ class Theme(ExtraDataModelMixin, models.Model):
     )
 #add text font name from google fonts
     font = models.CharField(
-        help_text=_('Fill font name from google font. If you want default fount please fill "default".'),
+        help_text=_(mark_safe(f"""Fill font name from <a href = {'https://fonts.google.com/'} target="_blank">Google fonts</a>. If you want default fount please fill "default".""")),
         verbose_name=_('Font for text Logo.'),
         max_length=128
     )
