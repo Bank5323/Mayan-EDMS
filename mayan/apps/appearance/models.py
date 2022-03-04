@@ -93,27 +93,12 @@ class Theme(ExtraDataModelMixin, models.Model):
         css_font = ''
         if font != 'default':
             css_font = f"""
-                .navbar-brand {{
-                    font-family: {font.split(':')[0]};
-                }}
-                *{{
+                * {{
                     font-family: {font.split(':')[0]} !important;
                 }}
-                #content-title{{
-                    font-family: {font.split(':')[0]};
-                }}
-                .col-xs-12 h4{{
-                    font-family: {font.split(':')[0]};
-                }}
-                .content h2.title{{
-                    font-family: {font.split(':')[0]};
-                }}
-                .modal-header h4.modal-title{{
-                    font-family: {font.split(':')[0]};
-                }}
-
             """
         css = f"""
+        {css_font}
         .btn{{
         background-color: {maincolor};
         }}
@@ -161,7 +146,6 @@ class Theme(ExtraDataModelMixin, models.Model):
         .container-fluid{{
                 background: {maincolor}
         }}
-        {css_font}
         """
         self.stylesheet = css
 
