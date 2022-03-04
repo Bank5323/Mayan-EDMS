@@ -83,7 +83,7 @@ def appearance_get_user_theme_stylesheet(user):
     except:
         return ''
     
-    return currentThemeStylesheet
+    return mark_safe(currentThemeStylesheet)
 
 
 
@@ -102,6 +102,20 @@ def appearance_get_user_theme_stylesheet(user):
 
     # return ''
 
+@register.simple_tag
+def appearance_import_fonts():
+    CurrentTheme = apps.get_model(
+        app_label='appearance', model_name='CurrentTheme'
+    )
+    try:
+        font = CurrentTheme.objects.first().theme.font
+        font = font.replace(' ','+')
+    except:
+        return ''
+    
+    if font == 'default':
+        return ''
+    return mark_safe(f"""<link href="https://fonts.googleapis.com/css2?family={font}&display=swap" rel="stylesheet">""")
 
 @register.simple_tag
 def appearance_icon_render(icon, enable_shadow=False):

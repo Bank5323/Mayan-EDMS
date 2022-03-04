@@ -15,11 +15,22 @@ from .events import event_theme_created, event_theme_edited
 #import RGBColorFie to create GUI select color
 from colorful.fields import RGBColorField
 
+#import os for read files
+from os import listdir
+from os.path import isfile, join
+
+
 
 class Theme(ExtraDataModelMixin, models.Model):
     label = models.CharField(
         db_index=True, help_text=_('A short text describing the theme.'),
         max_length=128, unique=True, verbose_name=_('Label')
+    )
+#add text font name from google fonts
+    font = models.CharField(
+        help_text=_('Fill font name from google font. If you want default fount please fill "default".'),
+        verbose_name=_('Font for text Logo.'),
+        max_length=128
     )
 
 #add color code to model
@@ -75,6 +86,32 @@ class Theme(ExtraDataModelMixin, models.Model):
         maincolor = self.mainColor
         secondColor = self.secondColor
         thirdColor = self.thirdColor
+        font = self.font
+
+        #set css to set font
+        css_font = ''
+        if font != 'default':
+            css_font = f"""
+                .navbar-brand {{
+                    font-family: {font.split(':')[0]};
+                }}
+                *{{
+                    font-family: {font.split(':')[0]} !important;
+                }}
+                #content-title{{
+                    font-family: {font.split(':')[0]};
+                }}
+                .col-xs-12 h4{{
+                    font-family: {font.split(':')[0]};
+                }}
+                .content h2.title{{
+                    font-family: {font.split(':')[0]};
+                }}
+                .modal-header h4.modal-title{{
+                    font-family: {font.split(':')[0]};
+                }}
+
+            """
         css = f"""
         .btn{{
         background-color: {maincolor};
@@ -112,21 +149,26 @@ class Theme(ExtraDataModelMixin, models.Model):
         #accordion-sidebar a[aria-expanded="true"]{{
             background-color: {thirdColor};
         }}
-        .navbar-default .navbar-nav&gt;li&gt;a:hover, .navbar-default .navbar-nav&gt;li&gt;a:focus {{
+        .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {{
             color: {thirdColor};
             background-color: transparent;
         }}
-        .panel-primary&gt;.panel-heading {{
+        .panel-primary>.panel-heading {{
             background-color: {secondColor};
             border-color: {thirdColor};
         }}
         .container-fluid{{
                 background: {maincolor}
         }}
+        {css_font}
         """
-        self.stylesheet = bleach.clean(
-            text=css, tags=('style',)
-        )
+        self.stylesheet = css
+
+        #test list files
+        # onlyfiles = [f for f in listdir('/Mayan-EDMS/mayan/media/static/appearance/fonts') if isfile(join('/Mayan-EDMS/mayan/media/static/appearance/fonts', f))]
+        # print(onlyfiles)
+
+
         super().save(*args, **kwargs)
 
 
