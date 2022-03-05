@@ -37,17 +37,17 @@ class Theme(ExtraDataModelMixin, models.Model):
 #add color code to model
     mainColor = RGBColorField(
         help_text=_('The RGB color values for main color.'),
-        verbose_name=_('Color Background Topbar Menu')
+        verbose_name=_('Main Color')
     )
 
     secondColor = RGBColorField(
-        help_text=_('The RGB color values for second color.'),
-        verbose_name=_('Color Background Main Menu')
+        help_text=_('The RGB color values for second color. It should be a color lighter than the main color.'),
+        verbose_name=_('Second Color')
     )
 
     thirdColor = RGBColorField(
-        help_text=_('The RGB color values for third color.'),
-        verbose_name=_('Color Background Main Menu')
+        help_text=_('The RGB color values for third color. It should be a color darker than the main color.'),
+        verbose_name=_('Third Color')
     )
 
     stylesheet = models.TextField(
@@ -99,53 +99,117 @@ class Theme(ExtraDataModelMixin, models.Model):
             """
         css = f"""
         {css_font}
-        .btn{{
-        background-color: {maincolor};
-        }}
-        .panel-heading{{
+        
+        .container-fluid {{
             background-color: {maincolor};
         }}
-        #menu-main{{
-            background-color: {secondColor};
+
+        .navbar.navbar-default.navbar-fixed-top .dropdown-menu li a {{
+            color: {maincolor};
         }}
-        .panel-heading{{
+        .navbar.navbar-default.navbar-fixed-top .dropdown-menu li a:hover {{
             background-color: {maincolor};
-        }}
-        a:hover{{
-            color: {thirdColor};
-        }} 
-        .row strong{{
             color: white;
         }}
-        .panel .panel-footer{{
-            color: {secondColor};
-        }}
-        .panel panel-heading{{
-            background: {secondColor};
-        }}
-        .panel-title{{
-            background-color: {secondColor};
-        }}
-        #accordion-sidebar .panel-body{{
-            background-color: {maincolor};
-        }}
-        #accordion-sidebar .panel-body:hover{{
-            background-color: {maincolor};
-        }}
-        #accordion-sidebar a[aria-expanded="true"]{{
-            background-color: {thirdColor};
+        .nav.navbar-nav.navbar-right li.dropdown.open a[aria-expanded="true"] {{
+            background: {thirdColor};
         }}
         .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {{
             color: {thirdColor};
             background-color: transparent;
         }}
-        .panel-primary>.panel-heading {{
+
+
+        #menu-main {{
+            background-color:  {maincolor};
+        }}
+        #accordion-sidebar .panel-heading {{
+            background-color: {maincolor};
+        }}
+        #accordion-sidebar .panel-heading:hover {{
             background-color: {secondColor};
-            border-color: {thirdColor};
+            transition: .1s ease;
         }}
-        .container-fluid{{
-                background: {maincolor}
+        #accordion-sidebar .panel-heading.active {{
+            background-color: {thirdColor};
+            transition: .1s ease;
         }}
+        #accordion-sidebar > .panel > div > .panel-body > ul > li:hover {{
+            background-color: {secondColor};
+            transition: .1s ease;
+        }}
+        #accordion-sidebar > .panel > div > .panel-body > ul > li.active {{
+            background: {thirdColor};
+        }}
+        #accordion-sidebar a[aria-expanded="true"]{{
+            background-color: {thirdColor};
+        }}
+        #accordion-sidebar .panel-body{{
+            background-color: {maincolor};
+        }}
+
+
+        .pull-right.btn-group.open li a:hover{{
+            background:{secondColor};
+            color: white;
+        }}
+        .pull-right.btn-group.open li a{{
+            color: {maincolor};
+        }}
+
+
+        td.last .btn-list a.btn-primary{{
+            background: {maincolor}; #สีขอบ
+        }}
+
+        .well .panel-heading{{
+            color: {maincolor}
+        }}
+
+        .btn-block{{
+            background-color: {maincolor};
+            border: 1px solid {maincolor};
+        }}
+
+        .btn.btn-primary.btn-xs  {{
+            background-color: {maincolor};
+        }}
+
+        .btn.btn-primary  {{
+            background-color: {maincolor};
+        }}
+
+        .list-group-item.btn-sm.active {{
+            background-color: {maincolor};
+        }}
+
+        .btn-block:hover{{
+            background: {secondColor};
+        }}
+
+        button.btn.btn-primary.disabled {{
+            background: black;
+            opacity: 1;
+        }}
+
+        .well .panel-primary .panel-heading {{
+            background-color: {maincolor};
+        }}
+
+        .well .panel-primary .panel-body ul li a{{
+            color:{maincolor};
+        }}
+        .well .panel-primary .panel-body ul li a:hover{{
+            background:{secondColor};
+            color: white;
+        }}
+        button.btn.btn-primary.disabled {{
+            background: {maincolor};
+        }}
+
+
+
+    
         """
         self.stylesheet = css
 
