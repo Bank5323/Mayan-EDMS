@@ -29,7 +29,7 @@ class Theme(ExtraDataModelMixin, models.Model):
     )
 #add text font name from google fonts
     font = models.CharField(
-        help_text=_(mark_safe(f"""Fill font name from <a href = {'https://fonts.google.com/'} target="_blank">Google fonts</a>. If you want default fount please fill "default".""")),
+        help_text=_(mark_safe(f"""Fill font name from <a class='link_google' onclick="window.open('{'https://fonts.google.com/'}', '_blank')"; style="cursor: pointer;">Google fonts</a>. If you want default fount please fill "default".""")),
         verbose_name=_('Font for text Logo.'),
         max_length=128
     )
