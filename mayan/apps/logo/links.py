@@ -4,6 +4,6 @@ from .icons import icon_logo_setting
 
 link_logo_setting = Link(
     icon=icon_logo_setting,
-    text=_('Logo setting'),
+    text=_('Logo Text'),
     view='logo:logo_view'
 )
