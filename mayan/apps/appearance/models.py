@@ -209,6 +209,10 @@ class Theme(ExtraDataModelMixin, models.Model):
             background: {maincolor};
         }}
 
+        .panel-primary .panel-heading{{
+            background: {maincolor}
+        }}
+
 
 
     
