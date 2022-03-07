@@ -113,7 +113,7 @@ def appearance_import_fonts():
     except:
         return ''
     
-    if font == 'default':
+    if font == '0':
         return ''
     return mark_safe(f"""<link href="https://fonts.googleapis.com/css2?family={font}&display=swap" rel="stylesheet">""")
 

@@ -15,14 +15,14 @@ from .events import event_theme_created, event_theme_edited
 #import RGBColorFie to create GUI select color
 from colorful.fields import RGBColorField
 
-#import os for read files
-from os import listdir
-from os.path import isfile, join
-
+#import for set link google font
 from django.utils.safestring import mark_safe
+
+from .list_font import LIST_FONT
 
 
 class Theme(ExtraDataModelMixin, models.Model):
+
     label = models.CharField(
         db_index=True, help_text=_('A short text describing the theme.'),
         max_length=128, unique=True, verbose_name=_('Label')
@@ -30,8 +30,10 @@ class Theme(ExtraDataModelMixin, models.Model):
 #add text font name from google fonts
     font = models.CharField(
         help_text=_(mark_safe(f"""Fill font name from <a class='link_google' onclick="window.open('{'https://fonts.google.com/'}', '_blank')"; style="cursor: pointer;">Google fonts</a>. If you want default fount please fill "default".""")),
-        verbose_name=_('Font for text Logo.'),
-        max_length=128
+        verbose_name=_('Font'),
+        max_length=128,
+        choices = LIST_FONT,
+        default = 'default'
     )
 
 #add color code to model
@@ -212,11 +214,6 @@ class Theme(ExtraDataModelMixin, models.Model):
     
         """
         self.stylesheet = css
-
-        #test list files
-        # onlyfiles = [f for f in listdir('/Mayan-EDMS/mayan/media/static/appearance/fonts') if isfile(join('/Mayan-EDMS/mayan/media/static/appearance/fonts', f))]
-        # print(onlyfiles)
-
 
         super().save(*args, **kwargs)
 
