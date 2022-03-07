@@ -458,7 +458,7 @@ a i {
 
     .navbar-brand {
         text-align: center;
-        width: 210px;
+        width: auto;
     }
 }
 

@@ -7,6 +7,8 @@ register = Library()
 
 @register.simple_tag
 def smart_setting(global_name):
+    if Setting.get(global_name=global_name).value == None:
+        return ""
     return Setting.get(global_name=global_name).value
 
 

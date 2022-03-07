@@ -9,6 +9,14 @@ class ThemeForm(forms.ModelForm):
     class Meta:
         fields = ('label', 'mainColor', 'secondColor', 'thirdColor', 'font', ) #edit form
         model = Theme
+        widgets = {
+            'font': forms.Select(
+                attrs={
+                    'class': 'select2'
+                }
+            ),
+        }
+
 
 
 class UserThemeSettingForm(forms.ModelForm):
