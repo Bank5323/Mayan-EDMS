@@ -17,6 +17,8 @@ from .menus import menu_tools, menu_setup
 from .permissions import permission_object_copy
 from .settings import setting_home_view
 
+from django.apps import apps
+
 
 class AboutView(SimpleView):
     extra_context = {'title': _('About')}
@@ -31,7 +33,10 @@ class FaviconRedirectView(RedirectView):
         Hide the static tag import to avoid errors with static file
         processors.
         """
-        return static(path='appearance/images/favicon.ico')
+        ## Change logo icon bar tab
+        return static(path='appearance/images/unknown-removebg-preview_1.png')
+        # return static(path='appearance/images/NewCanvas2.png')
+        # return static(path='appearance/images/favicon.ico')
 
 
 class HomeView(SimpleView):
