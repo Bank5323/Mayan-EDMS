@@ -246,14 +246,15 @@ class UserManagementApp(MayanAppConfig):
             attribute='has_usable_password', include_label=True, source=User,
             widget=TwoStateWidget
         )
-
+        
         dashboard_administrator.add_widget(
             widget=DashboardWidgetUserTotal, order=99
         )
+        
         dashboard_administrator.add_widget(
             widget=DashboardWidgetGroupTotal, order=99
         )
-
+        
         # Group
 
         menu_list_facet.bind_links(
@@ -291,7 +292,7 @@ class UserManagementApp(MayanAppConfig):
                 Group
             )
         )
-
+        
         # User
 
         menu_list_facet.bind_links(
@@ -332,7 +333,7 @@ class UserManagementApp(MayanAppConfig):
                 link_current_user_details, link_current_user_edit,
             ), position=0
         )
-
+        
         post_save.connect(
             dispatch_uid='user_management_handler_initialize_new_user_options',
             receiver=handler_initialize_new_user_options,
