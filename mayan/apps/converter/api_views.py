@@ -62,9 +62,9 @@ class APIAssetImageView(APIImageViewMixin, generics.RetrieveAPIView):
     get: Returns an image representation of the selected document.
     """
     lookup_url_kwarg = 'asset_id'
-    mayan_object_permissions = {
-        'GET': (permission_asset_view,),
-    }
+    #mayan_object_permissions = {
+    #    'GET': (permission_asset_view,),
+    #}
     queryset = Asset.objects.all()
 
 
